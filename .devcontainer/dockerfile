@@ -1,0 +1,29 @@
+ARG PYTHON_VERSION=3.10.11
+ARG BASE_IMAGE=python:${PYTHON_VERSION}-buster
+FROM ${BASE_IMAGE}
+
+
+ARG PROJECT_NAME=preprop
+ARG USER_NAME=user
+ARG GROUP_NAME=developer
+ARG UID=1000
+ARG GID=1000
+ARG WORK_DIR=/home/${USER_NAME}/${PROJECT_NAME}
+
+# Install Poetry
+RUN python3 -m pip install --upgrade pip setuptools requests \
+    && python3 -m pip install poetry
+
+RUN groupadd -g ${GID} ${GROUP_NAME} \
+    && useradd -ms /bin/sh -u ${UID} -g ${GID} ${USER_NAME}
+
+USER ${USER_NAME}
+WORKDIR ${WORK_DIR}
+
+# Poetry が作成する仮想環境のディレクトリをプロジェクト直下に変更
+# Ref: [Poetry documentation (ver. 1.1.6 日本語訳)]
+# (https://cocoatomo.github.io/poetry-ja/configuration/)
+RUN poetry config virtualenvs.in-project true \
+  && poetry new ${PROJECT_NAME}
+
+#COPY --chown=${USER_NAME}:${GROUP_NAME} pyproject.toml poetry.lock poetry.toml .
