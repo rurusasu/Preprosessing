@@ -3,6 +3,10 @@
     "dockerFile": "Dockerfile",
     // 拡張機能
     "extensions": [
-        "ms-python.python",
-    ],
+        "oderwat.indent-rainbow", // Indent-rainbow
+        "njpwerner.autodocstring", // autoDocstring
+		"ms-python.python", // Python
+		"ms-toolsai.jupyter", // Jupyter
+		"GitHub.copilot-nightly"
+	],
 }

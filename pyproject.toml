@@ -23,6 +23,8 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.10,<3.11"
 jupyterlab = "^3.6.3"
+transformers = "^4.29.1"
+torch = "^2.0.1"
 
 
 [tool.poetry.group.dev.dependencies]
